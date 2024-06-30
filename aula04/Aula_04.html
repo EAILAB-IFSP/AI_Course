@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Aula 04</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Aula_04_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Aula_04_files/libs/quarto-html/quarto.js"></script>
+<script src="Aula_04_files/libs/quarto-html/popper.min.js"></script>
+<script src="Aula_04_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Aula_04_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Aula_04_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Aula_04_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Aula_04_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Aula_04_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Aula_04_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Aula 04</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="aula-04" class="level1">
+<h1>Aula 04</h1>
+<section id="considerações-iniciais" class="level2">
+<h2 class="anchored" data-anchor-id="considerações-iniciais">Considerações iniciais</h2>
+<p>Nesta aula apresentamos os conceitos sobre Algoritmos de Classificação utilizados em Aprendizado de Máquina (Machine Learning). Serão vistos os algoritmos de Naïve Bayes, Árvores de decisão, Aprendizado por regras, aprendizado por instâncias (kNN), aprendizado com máquinas de vetores de suporte (SVM), e Regressão Logística.</p>
+</section>
+<section id="conceitos-sobre-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="conceitos-sobre-machine-learning">Conceitos sobre Machine Learning</h2>
+<p><br></p>
+<p><img src="/imagens/aula_04/ml_architectury.png" class="img-fluid"> <br></p>
+<p>Neste exemplo temos os dados dos clientes e sua classificação de risco, o objetivo a partir desta tabela é classificar futuros clientes usando Machine Learning.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imagens/aula_04/bd_cr%C3%A9dito.png" class="img-fluid figure-img"></p>
+<figcaption>Dados para treinos</figcaption>
+</figure>
+</div>
+<ul>
+<li>Note que os a coluna dos riscos é uma avaliação feita pelo banco</li>
+</ul>
+<p><br></p>
+</section>
+<section id="objetivo" class="level2">
+<h2 class="anchored" data-anchor-id="objetivo">Objetivo</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imagens/aula_04/bd_n_clientes.png" class="img-fluid figure-img"></p>
+<figcaption>Base de dados de clientes que chegam ao banco solicitando empréstimo</figcaption>
+</figure>
+</div>
+<ul>
+<li>Treinar um algoritmo de Machine Learning</li>
+<li>Testar cada registro de cliente para que o algoritmo possa fazer a análise e classificar: Risco: Baixo, Moderado ou Alto</li>
+</ul>
+</section>
+<section id="algoritmos-naive-bayes" class="level2">
+<h2 class="anchored" data-anchor-id="algoritmos-naive-bayes">Algoritmos Naive Bayes</h2>
+<p>Naive Bayes é um algoritmo que gera uma tabela de probabilidades a partir de uma técnica de classificação de dados. É usado para o machine learning, mas a técnica é famosa no meio acadêmico da estatística. Seu racional é baseado nos estudos de Thomas Bayes e “naive” significa ingênuo, uma referência a linha de análise do algoritmo para as características da base de dados em questão.</p>
+<p>Sua aplicação para classificação e geração de tabela de probabilidades. Vale dizer que sua lógica assume que a presença de uma característica específica não se relaciona com qualquer outro recurso também inserido na base de dados analisada. + Exemplo: construção de uma campanha de marketing focada em um lead ideal que teria que estar alinhado com o preço, diferenciais do produto e canal de aquisição. Assim, todos esses elementos, juntos, têm uma relação direta com a construção da campanha mais eficiente para a conversão, mas, separadamente, também configuram propriedades que contribuem para a probabilidade de encontrar o lead ideal.</p>
+<p>Isto permite fazer o aprendizado de máquina que contempla uma análise com diferentes elementos de forma integrada, e também separadamente, trazendo mais insights e informações para o gestor</p>
+</section>
+<section id="treinamento" class="level2">
+<h2 class="anchored" data-anchor-id="treinamento">Treinamento</h2>
+<p>Aprendizagem: coloca os dados na tabela</p>
+<ul>
+<li>Coloca na tabela a quantidade de ocorrência de cada atributo</li>
+<li>Calcula as porcentagens de intersecção entre as colunas</li>
+</ul>
+<p><img src="/imagens/aula_04/tabela_de_valores.png" class="img-fluid"></p>
+</section>
+<section id="análise-de-risco-de-um-novo-cliente" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-risco-de-um-novo-cliente">Análise de risco de um novo cliente</h2>
+<p>Dados:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>História</th>
+<th style="text-align: left;">Dívida</th>
+<th style="text-align: right;">Garantias</th>
+<th style="text-align: center;">Renda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Boa</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: right;">Nenhuma</td>
+<td style="text-align: center;">&gt; 35.000</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[
+P(\text{Alto}) = \frac{6}{14} \cdot \frac{1}{6} \cdot \frac{4}{6} \cdot \frac{6}{6} \cdot \frac{1}{6}
+\]</span></p>
+<p><span class="math display">\[
+P(\text{Alto}) = 0,0079
+\]</span></p>
+<p><span class="math display">\[
+P(\text{Alto}) = (0,0079/ 0,0645) *100 = 12,24
+\]</span> <br></p>
+<p><span class="math display">\[
+    P(\text{Moderado}) = \frac{3}{14} \cdot \frac{1}{3} \cdot \frac{1}{3} \cdot \frac{2}{3} \cdot \frac{1}{3}
+\]</span> <span class="math display">\[
+    P(\text{Moderado}) = 0,0052
+\]</span></p>
+<p><span class="math display">\[
+    P(\text{Moderado}) = (0,0052/ 0,0645)* 100 = 8,06
+\]</span></p>
+</section>
+<section id="atividade-prática-naive-bayes" class="level2">
+<h2 class="anchored" data-anchor-id="atividade-prática-naive-bayes">Atividade prática Naive Bayes</h2>
+</section>
+<section id="algoritmo-árvore-de-decisão" class="level2">
+<h2 class="anchored" data-anchor-id="algoritmo-árvore-de-decisão">Algoritmo Árvore de decisão</h2>
+<ul>
+<li><p>Uma árvore de decisão é um algoritmo de aprendizado de máquina supervisionado que é utilizado para classificação e para regressão.</p></li>
+<li><p>Possui estrutura de um fluxograma, sendo que a árvore de decisão estabelece nós (decision nodes) que se relacionam entre si por uma hierarquia.</p></li>
+<li><ul>
+<li>Existe o nó-raiz (root node), que é o mais importante, e os nós-folha (leaf nodes), que são os resultados finais.</li>
+</ul></li>
+<li><ul>
+<li>No contexto de Machine Learning, o raiz é um dos atributos da base de dados e o nó-folha é a classe ou o valor que será gerado como resposta.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="/imagens/aula_04/decision-tree.webp" class="img-fluid figure-img"></p>
+<figcaption>Fonte da imagem: Data Science Foudation</figcaption>
+</figure>
+</div>
+</section>
+<section id="árvore-de-decisão-em-python-e-r" class="level2">
+<h2 class="anchored" data-anchor-id="árvore-de-decisão-em-python-e-r">Árvore de decisão em Python e R</h2>
+<section id="python" class="level3">
+<h3 class="anchored" data-anchor-id="python">Python</h3>
+<p>É possível implementar uma decision tree em apenas quatro linhas em Python.</p>
+<p>Uso do módulo DecisionTreeClassifier, (biblioteca Sklearn, com as funções “fit”, “score” para treinar e configurar). Para classificar um novo registro e verificar se o modelo aprendeu utiliza-se o método “predict”.</p>
+<p>Usar as funções do matplotlib para plotar um gráfico indicando visualmente como essa decision tree está realizando previsões.</p>
+</section>
+<section id="r" class="level3">
+<h3 class="anchored" data-anchor-id="r">R</h3>
+<p>No R, também conseguimos com muita facilidade construir um algoritmo de árvore decisória. Utiliza-se bibliotecas distintas como cTree, RPart e Tree. Em pouquíssimas linhas, pode ser cirado o modelo e a visualização de forma intuitiva.</p>
+<p>O R também utiliza o método “fit” — ou seja, o raciocínio não é tão diferente do Python</p>
+</section>
+</section>
+<section id="diagnóstico-de-doenças" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico-de-doenças">Diagnóstico de doenças</h2>
+<ul>
+<li><p>Identificar doenças a partir de informações passadas ao algoritmo como treinamento (classificação)</p></li>
+<li><p>O Sistema aprende os dados, entende suas relações, realiza os cálculos para entender quais são os nós mais importantes e ajusta as condições.</p></li>
+<li><p>Para resultados ainda mais interessantes, utilizar random forest</p></li>
+</ul>
+</section>
+<section id="previsão-de-empréstimo" class="level2">
+<h2 class="anchored" data-anchor-id="previsão-de-empréstimo">Previsão de Empréstimo</h2>
+<ul>
+<li><p>Aplicação de regressão pois necessita de informação numérica como saída.</p></li>
+<li><p>O Sistema vai entender como a base de dados está organizada de acordo com os atributos e criar um modelo capaz de fazer essa previsão.</p></li>
+</ul>
+</section>
+<section id="análise-de-sentimentos" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-sentimentos">Análise de sentimentos</h2>
+<ul>
+<li><p>A análise de sentimentos é uma sub categoria do processamento de linguagem natural.</p></li>
+<li><p>O modelo entende os dados e tenta prever se um texto deve ser categorizado como positivo ou negativo, por exemplo.</p></li>
+<li><p>Para melhores resultados, a random forest é aplicada também.</p></li>
+</ul>
+</section>
+<section id="previsão-de-saída-de-funcionários" class="level2">
+<h2 class="anchored" data-anchor-id="previsão-de-saída-de-funcionários">Previsão de saída de funcionários</h2>
+<ul>
+<li><p>Outro uso muito específico é para o RH saber quando um funcionário está quase saindo da empresa por insatisfação.</p></li>
+<li><p>Com a análise de dados sobre cada um, o modelo entende a base de dados e consegue realizar uma predição, ou seja, uma classificação.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imagens/aula_04/arvore_de_decisao_credito.svg" class="img-fluid figure-img"></p>
+<figcaption>Árvore de Decisão para crédito</figcaption>
+</figure>
+</div>
+<p>Análise de um novo cliente</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>História</th>
+<th style="text-align: left;">Dívida</th>
+<th style="text-align: right;">Garantias</th>
+<th style="text-align: center;">Renda</th>
+<th style="text-align: right;">Risco</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Boa</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: right;">Nenhuma</td>
+<td style="text-align: center;">&gt; 35.000</td>
+<td style="text-align: right;">Baixo</td>
+</tr>
+<tr class="even">
+<td>Ruim</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: right;">Adequada</td>
+<td style="text-align: center;">&lt; 15.000</td>
+<td style="text-align: right;">Alto</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="atividade-prática-árvore-de-decisão" class="level2">
+<h2 class="anchored" data-anchor-id="atividade-prática-árvore-de-decisão">Atividade prática Árvore de Decisão</h2>
+</section>
+<section id="aprendizagem-baseada-em-instâncias---knn" class="level2">
+<h2 class="anchored" data-anchor-id="aprendizagem-baseada-em-instâncias---knn">Aprendizagem baseada em Instâncias - kNN</h2>
+<p>O K Nearest Neighbors (KNN) ou os K vizinhos mais próximos, traduzindo para o português, é um algoritmo de aprendizagem de máquina supervisionado. Embora seja majoritariamente utilizado em problemas de classificação, este algoritmo também pode ser aplicado em problemas de regressão.</p>
+<p>A aprendizagem baseada em instâncias provém da não existência de um modelo (regra ou função) construído a partir de uma base de dados de treinamento (até porque o KNN não possui uma etapa de treinamento, propriamente dito).</p>
+<p>O que se faz é armazenar todos os dados (instâncias) de treinamento (demandando um alto poder de armazenamento), e a cada nova instância que se deseja classificar, cálculos comparativos são realizados entre esta e os demais dados já existentes. Por esse motivo, o KNN é conhecido como sendo um algoritmo preguiçoso.</p>
+<p>O KNN faz a comparação entre instâncias por meio do cálculo da distância entre vetores/dados dispostos no espaço euclidiano. Existem várias métricas para calcular a distância entre pontos no espaço (Euclidiana, Hamming, Manhattan, Minkowski, Chebyshev e outras), aqui vamos analisar o algoritmo utilizando a distância Euclidiana, por ser a mais comumente utilizada.</p>
+<p><img src="imagens/aula_04/knn.png" class="img-fluid"></p>
+<ul>
+<li><p>Na imagem estão inicialmente todos os dados dispostos no espaço euclidiano (incluindo o dado que se deseja classificar).</p></li>
+<li><p>O algoritmo realiza o cálculo da distância euclidiana entre a nova instância e todas as outras instâncias já classificadas (uma a uma), em que a classe é conhecida através dos dados de treinamento.</p></li>
+<li><p>Com todas as distâncias calculadas, os K elementos mais próximos (com menor distância) são selecionados e suas respectivas classes são analisadas (representado no terceiro gráfico da figura).</p></li>
+<li><p>Por fim, a classe que obteve maior representatividade através dos K vizinhos mais próximos será usada para definir o rótulo da nova instância. No exemplo da figura, o novo elemento seria classificado como sendo da Classe B.</p></li>
+</ul>
+<p>Quando o KNN é utilizado em problemas de classificação, a predição é feita por meio da classe com maior representatividade (moda). Por outro lado, em problemas de regressão, o resultado da predição é definido como sendo a média dos K valores mais próximos.</p>
+<p>A análise matemática do algoritmo é essencialmente concentrada na equação da distância euclidiana:</p>
+<p><span class="math display">\[
+d(P_i,P_j) =  \sum_{m=1}^{n} (P_{im} - P_{jm})^2
+\]</span></p>
+<p>Em que n representa o número de variáveis (colunas) que são usadas para caracterizar os dados e m é a variável que é iterada por esses possíveis valores — m=1, 2, …, n.&nbsp;A variável alvo não entra nos equacionamentos.</p>
+<p>pim e pjm são, respectivamente, o vetor com as características do dado a ser classificado e o vetor que contém as informações referentes aos dados existentes (dados de treino).</p>
+<p>Esse cálculo é realizado x vezes, onde x é a quantidade de instâncias existentes no conjunto de treino.</p>
+<p>Temos duas classes: Azul e vermelha e um ponto no meio</p>
+<p><img src="/imagens/aula_04/knn_graph.png" class="img-fluid" style="width:50.0%"></p>
+<p>Verificar os vizinhos existentes (k) ao ? e classificar conforme a maioria</p>
+<p><img src="imagens/aula_04/knn_table.png" class="img-fluid"></p>
+<p>Cálculo da distância Euclidiana</p>
+<p><img src="imagens/aula_04/knn_calc.png" class="img-fluid"></p>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>OBS: para classificar em uma cor, verifica-se a quantidade de cor maior do PONTO DE INTERROGAÇÃO</p>
+</div>
+</div>
+</div>
+<p>Como exemplo vamos analisar a distância deste registro de um novo cliente com o pontos selecionados (3º e 9º)</p>
+<p><img src="imagens/aula_04/knn_processo_credito.png" class="img-fluid"></p>
+<p>Logo esteve novo cliente por estar mais próximo do 9° terá: RISCO BAIXO</p>
+</section>
+<section id="atividade-prática-algoritmo-baseado-em-instâncias--knn" class="level2">
+<h2 class="anchored" data-anchor-id="atividade-prática-algoritmo-baseado-em-instâncias--knn">Atividade prática: Algoritmo baseado em Instâncias -kNN</h2>
+<p>Arquivo: kNN.ows</p>
+</section>
+<section id="aprendizagem-com-máquinas-de-vetores-de-suporte---svm" class="level2">
+<h2 class="anchored" data-anchor-id="aprendizagem-com-máquinas-de-vetores-de-suporte---svm">Aprendizagem com máquinas de Vetores de Suporte - SVM</h2>
+<p>Máquina de Vetores de Suporte (Support Vectors Machine — SVM, do inglês) é um algoritmo de aprendizagem de máquina utilizado tanto para classificação quanto para regressão.</p>
+<p>Essencialmente, o SVM é responsável por encontrar a melhor fronteira de separação entre classes/rótulos possível para um dado conjunto de dados que sejam linearmente separáveis.</p>
+<p>Para o SVM, as diversas fronteiras de separação possíveis que são capazes de separar completamente as classes são chamadas de hiperplanos. Dessa forma, o SVM busca encontrar o melhor hiperplano para um dado data set cujas classes são linearmente separáveis.</p>
+<p>Objetivo: traçar uma linha que separe as duas classes</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="4">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm1.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm2.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm3.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm4.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>Partindo do conjunto de dados genérico apresentado, temos duas classes distintas e o objetivo então será encontrar o melhor hiperplano capaz de separar as duas classes e que estaria localizado no ponto médio entre elas (maximizando a margem)</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm5.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="imagens/aula_04/svm6.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

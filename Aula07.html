@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Aula 7 - Conceito de Machine Learning e TinyML</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Aula07_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Aula07_files/libs/quarto-html/quarto.js"></script>
+<script src="Aula07_files/libs/quarto-html/popper.min.js"></script>
+<script src="Aula07_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Aula07_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Aula07_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Aula07_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Aula07_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Aula07_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Aula07_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Aula 7 - Conceito de Machine Learning e TinyML</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ecossistema-de-inteligência-artificial" class="level1">
+<h1>Ecossistema de Inteligência Artificial</h1>
+<p>Artificial Intelligence: qualquer técnica que possibilite aos computadores imitar o comportamento humano</p>
+<p>Machine Learnig: Capacidade de aprender sem ser explicitamente programado</p>
+<p>Deep Learning: Extrai padrões de dados usando redes neurais</p>
+<p><br></p>
+<p><img src="aula7_images/slide4_image3.png" class="img-fluid"></p>
+<p><br> Edge AI (or Edge ML) é o processamento de algoritmos de Inteligência Artificial na borda (edge), ou seja, nos dispositivos dos usuários. O conceito deriva da Computação de borda (Edge Computing), que parte da mesma premissa: os dados são armazenados, processados e gerenciados diretamente nos dispositivos finais da Internet das Coisas (IoT).</p>
+<p>TinyML é um subconjunto da EdgeML, onde os sensores estão gerando os dados com baixo consumo de energia (baterias), possibilitando a implantação do aprendizado de máquina continuamente (“sempre nos dispositivos”)</p>
+<p><br> <img src="aula7_images/slide6_image4.png" class="img-fluid"></p>
+</section>
+<section id="conceito-de-machine-learning" class="level1">
+<h1>Conceito de Machine Learning</h1>
+<section id="o-que-é-aprendizado-de-máquina" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-é-aprendizado-de-máquina">O que é Aprendizado de Máquina?</h2>
+<ol type="1">
+<li>Aprendizado de Máquina é um subcampo da Inteligência Artificial focado no desenvolvimento de algoritmos que aprendem a resolver problemas analisando dados para padrões.</li>
+</ol>
+<p><br> <img src="aula7_images/slide7_image5.png" class="img-fluid"></p>
+</section>
+<section id="conceito-de-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="conceito-de-deep-learning">Conceito de Deep Learning</h2>
+<ol start="2" type="1">
+<li>Deep Learning é um tipo de Aprendizado de Máquina que aproveita Redes Neurais e Big Data</li>
+</ol>
+<p><br></p>
+</section>
+</section>
+<section id="aplicações-de-machine-learning" class="level1">
+<h1>Aplicações de Machine Learning</h1>
+<ul>
+<li>Classificação ou Detectação em imagens e vídeos</li>
+<li>Transcrição de Áudio</li>
+<li>Recomendações</li>
+</ul>
+<p><img src="aula7_images/slide8_image6.png" class="img-fluid"></p>
+</section>
+<section id="classificação-de-imagem" class="level1">
+<h1>Classificação de Imagem</h1>
+<p><img src="aula7_images/slide9_image7.png" class="img-fluid"></p>
+</section>
+<section id="detecção-de-objeto" class="level1">
+<h1>Detecção de Objeto</h1>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="aula7_images/slide10_image8.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="aula7_images/slide10_image9.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="segmentação" class="level1">
+<h1>Segmentação</h1>
+<p><img src="aula7_images/slide11_image10.png" class="img-fluid"></p>
+</section>
+<section id="estimativa-de-pose" class="level1">
+<h1>Estimativa de pose</h1>
+<p><img src="aula7_images/slide12_image11.png" class="img-fluid"></p>
+</section>
+<section id="máquina-de-tradução-de-idioma" class="level1">
+<h1>Máquina de tradução de idioma</h1>
+<p><img src="aula7_images/slide13_image12.png" class="img-fluid"></p>
+</section>
+<section id="recomendações" class="level1">
+<h1>Recomendações</h1>
+<p><img src="aula7_images/slide14_image13.png" class="img-fluid"></p>
+<p>Todos os recursos dos exemplos anteriores exigiam uma grande quantidade de energia e recursos de computação. As empresas estão colocando todos esses computadores em data centers, e dedicados apenas para fornecer recursos de aprendizado de máquina.</p>
+<p><img src="aula7_images/slide15_image14.png" class="img-fluid"></p>
+<p>Para poder fornecer capacidade de ML, empresas como o Google estão criando TPUs (Tensor Processing Units) e GPUs NVIDIA (Graphics Processing Units). Ambos os sistemas de computação são capazes de executar aprendizado de máquina extremamente rápido.</p>
+<p><img src="aula7_images/slide16_image15.png" class="img-fluid"></p>
+</section>
+<section id="maior-não-é-sempre-o-melhor" class="level1">
+<h1>Maior não é sempre o melhor</h1>
+<p><img src="aula7_images/slide18_image17.png" class="img-fluid"></p>
+<p>Dispositivos menores com operação decentralizada conseguem operar utilizando menos energia, com uma menor largura de banda e obter menor latência.</p>
+<p>Os smartphones conseguiriam suprir a necessidade de ser um dispositivo desse gênero, entretanto dispositivos especializados são comumente utilizados por apresentarem maiores benefícios como por exemplo a Alexa.</p>
+<p><img src="aula7_images/slide21_image24.png" class="img-fluid"></p>
+<p>A partir de um dispositivo conectado outros dispositivos paralelos são integrados de forma wireless como smartwatchs, fones, luzes e etc.</p>
+<p><img src="aula7_images/slide22_image25.png" class="img-fluid"></p>
+</section>
+<section id="o-que-é-tinyml" class="level1">
+<h1>O que é TinyML</h1>
+<p>TinyML é uma das áreas de maior crescimento de Machine Learning, a ideia é criar modelos de Machine Learning capazes de operar em sistemas embarcados, devido as limitações de processamento desses dispositivos os modelos não podem ser computacionalmente custosos, para isso bibliotecas como o Tensor Flow Lite são utilizadas para criar modelos de TinyML <br></p>
+<p><img src="aula7_images/slide24.jpg" class="img-fluid"></p>
+<p><br></p>
+<p><img src="aula7_images/slide28_image38.png" class="img-fluid"></p>
+</section>
+<section id="aplicações-de-tiny-machine-learning-tinyml" class="level1">
+<h1>Aplicações de Tiny Machine Learning (TinyML)</h1>
+<p><img src="aula7_images/slide30_image44.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="aplicações-de-tiny-machine-learning" class="level1">
+<h1>Aplicações de Tiny Machine Learning</h1>
+<p><img src="aula7_images/slide31_image49.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="aplicações-industriais-de-tiny-machine-learning" class="level1">
+<h1>Aplicações industriais de Tiny Machine Learning</h1>
+<p><img src="aula7_images/slide32_image51.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="aula7_images/slide33_image52.png" class="img-fluid"></p>
+</section>
+<section id="aplicações-na-agricultura-de-tiny-machine-learning" class="level1">
+<h1>Aplicações na agricultura de Tiny Machine Learning</h1>
+<section id="clasificação-de-doenças-no-café" class="level2">
+<h2 class="anchored" data-anchor-id="clasificação-de-doenças-no-café">Clasificação de doenças no café</h2>
+<p><img src="aula7_images/slide35_image60.png" class="img-fluid"></p>
+<p><a href="https://www.hackster.io/Yukio/coffee-disease-classification-with-ml-b0a3fc">Clique aqui para acessar o paper</a></p>
+</section>
+<section id="detecção-de-incêndios-florestais" class="level2">
+<h2 class="anchored" data-anchor-id="detecção-de-incêndios-florestais">Detecção de incêndios florestais</h2>
+<p><img src="aula7_images/slide36_image63.png" class="img-fluid"></p>
+<p><a href="https://www.hackster.io/team-sol/tinyml-aerial-forest-fire-detection-78ec6b">TinyML Detecção Aérea de Incêndios Florestais</a></p>
+<p><a href="https://github.com/Mjrovai/UNIFEI-IESTI01-T01-2021.1/blob/main/00_Curso_Folder/2_Applications/Group_Projects-Final%20Reports/Projeto_final_Fire_detection/trabalho_final_Fire_Detection.pdf">IESTI01 – Detecção de Incêndio Florestal – Prova de Conceito</a></p>
+</section>
+</section>
+<section id="aplicações-na-saúde-de-tiny-machine-learning" class="level1">
+<h1>Aplicações na saúde de Tiny Machine Learning</h1>
+<p><img src="aula7_images/slide37_image64.png" class="img-fluid"></p>
+<p><a href="https://github.com/Gui7621/TFG-AFIB_and_SR_detection_using_ML_in_embedded_systems">Atrial Fibrillation Detection on ECG using TinyML Silva et al.&nbsp;UNIFEI 2021</a></p>
+</section>
+<section id="habilitando-tinyml" class="level1">
+<h1>Habilitando TinyML</h1>
+<p><img src="aula7_images/slide38_image69.png" class="img-fluid"></p>
+<p><img src="aula7_images/Imagem2.png" class="img-fluid"></p>
+</section>
+<section id="endpoints-tem-sensores-toneladas-de-sensores" class="level1">
+<h1>Endpoints tem sensores …… Toneladas de sensores</h1>
+<p><img src="aula7_images/slide44_image78.png" class="img-fluid"></p>
+<p><img src="aula7_images/slide45_image79.png" class="img-fluid"></p>
+</section>
+<section id="sensores-biométricos" class="level1">
+<h1>Sensores Biométricos</h1>
+<p><img src="aula7_images/slide46_image81.png" class="img-fluid"></p>
+<p><img src="aula7_images/slide47_image83.png" class="img-fluid"></p>
+</section>
+<section id="nano-33-ble-sense-ov7675-camera" class="level1">
+<h1>Nano 33 BLE SENSE &amp; OV7675 Camera</h1>
+<ul>
+<li><p>Sensor de cor, brilho, proximidade e gestos</p></li>
+<li><p>Microfone Digital</p></li>
+<li><p>Movimento, vibração e sensor de orientação</p></li>
+<li><p>Sensor de Temperatura, umidade e pressão</p></li>
+<li><p>Microcontrolador Arm Cortex-M4 e módulo BLE</p></li>
+</ul>
+<p><img src="aula7_images/slide48_image85.png" class="img-fluid"></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

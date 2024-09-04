@@ -1,4 +1,4 @@
-# Aula 7 - Conceito de Machine Learning e TinyML
+# Aula 6 - Conceito de Machine Learning e TinyML
 
 
 # Ecossistema de Inteligência Artificial

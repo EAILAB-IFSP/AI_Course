@@ -1,5 +1,8 @@
+<img src="/Imagens/Logo_Dourado.jpg" class="center" style="width:50%">
+
 # Inteligência Artificial aplicada à Automação
 
+<p> <a href="https://eailab-ifsp.github.io/AI_Course/">Clique Aqui Para Visualizar em HTML</a> <p>
 
 # Parte 1
 Material criado pelo [Professor Dr. Walter Augusto Varela](https://www.linkedin.com/in/walter-augusto-varella), com o auxilio do graduando em Engenharia [Arthur Ramos Pereira](linkedin.com/in/ramosp-arthur). com o objetivo de oferecer aos alunos uma introdução sobre a disciplina de Inteligência Artificial (IA) aplicada à Automação (2024).
